@@ -1,26 +1,17 @@
 import express from 'express';
-import morgan from 'morgan';
-import helmet from 'helmet';
-import cors from 'cors';
-import rateLimit from 'express-rate-limit';
+import connectDB from './config/db.js';
+import dotenv from 'dotenv';
+dotenv.config();
 const app = express();
-app.use(morgan('dev'));
-app.use(helmet());
-app.use(cors({
-  origin:'http://localhost:5173/'
-}))
-const limiter = rateLimit({
-  windowMs:1*60*1000,
-  max:100
-})
-app.use(limiter)
+const PORT = process.env.PORT || 5000;
+
+// connect to MongoDB
+connectDB();
+
+// basic route
 app.get('/', (req, res) => {
-  res.send({states:"Ok",service:"lost-item-backend"});
+  res.send('Server and MongoDB are working!');
 });
 
-app.get('/about', (req, res) => {
-  res.send('<h1>About</h1>');
-});
-
-
-app.listen(5000, () => console.log('Server is listening on port 5000'));
+// start server
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
