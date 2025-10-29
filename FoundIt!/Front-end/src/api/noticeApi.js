@@ -6,3 +6,5 @@ const API = axios.create({
 
 export const getNotices = () => API.get('/notice');
 export const createNotice = (data) => API.post('/notice', data);
+export const deleteNotice = (id) => API.delete(`/notice/${id}`);
+export const updateNotice = (id, data) => API.put(`/notice/${id}`, data);
